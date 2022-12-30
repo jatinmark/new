@@ -1,9 +1,12 @@
 
 import data from './data'
-
+import { post } from '../../lib/axios';
 // api/trending
+
 export default function handler(req, res){
     const { Trending } = data;
-    if(Trending) return res.status(200).json(Trending)
+    post(Trending);
+   
+   
     return res.status(404).json({ error: "Data Not Found"})
 }

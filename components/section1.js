@@ -9,10 +9,24 @@ import 'swiper/css';
 import fetcher from '../lib/fetcher'
 import Spinner from "./_child/spinner"
 import Error from "./_child/error"
+import { useEffect , useState } from "react";
+import {getpost }from "../lib/axios";
 
 
 export default function section1() {
 
+    
+    let [messages , setmessages] = useState([]);
+
+
+    useEffect(() => {
+        const getpostsdetails = async()=>{
+       let data = await getpost();
+      setmessages(data);
+  }
+  getpostsdetails();
+  }
+  ,[])
     const { data, isLoading, isError } = fetcher('api/trending')
     
     if(isLoading) return <Spinner></Spinner>;
@@ -24,6 +38,9 @@ export default function section1() {
         background: "url('/images/banner.png') no-repeat",
         backgroundPosition: "right"
     }
+
+   
+
 
   return (
     <section className="py-16" style={bg}>
@@ -38,8 +55,8 @@ export default function section1() {
                 // }}
                 >
                 {
-                    data.map((value, index) => (
-                        <SwiperSlide key={index}><Slide data={value}></Slide></SwiperSlide>
+                    messages.map((value, index) => (
+                        <SwiperSlide key={index}><Slide messages={value}></Slide></SwiperSlide>
                     ))
                 }
             ...
@@ -51,9 +68,9 @@ export default function section1() {
   )
 }
 
-function Slide({ data }){
+function Slide({ messages }){
 
-    const { id, title, category, img, published, description ,author } = data;
+    const { id, title, category, img, published, description ,author } = messages;
 
     return (
         <div className="grid md:grid-cols-2">

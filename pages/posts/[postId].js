@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import { SWRConfig } from 'swr'
 
 export default function Page({ fallback }){
-
+      
     const router = useRouter()
     const { postId } = router.query;
     const { data, isLoading, isError } = fetcher(`api/posts/${postId}`)
